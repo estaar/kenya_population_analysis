@@ -18,6 +18,14 @@ headers = {
 
 # Create a function to crawl through the site and download a population csvs
 def main(urls):
+    """
+    reads data from url and writes it out to csv file
+            :parameters:
+                urls (str): a string representation of the base url to scrap
+            :returns:
+                file_name (file) : dowmnloaded data saved to a csv file
+    """
+
     page = requests.get(urls, headers=headers)
     soup = BeautifulSoup(page.content, 'html.parser')
     for item in soup.find_all("a", class_="resource-url-analytics"):
