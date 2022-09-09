@@ -15,9 +15,10 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'
 }
 
+
 # Create a function to crawl through the site and download a population csvs
-def main(URL):
-    page = requests.get(URL, headers=headers)
+def main(urls):
+    page = requests.get(urls, headers=headers)
     soup = BeautifulSoup(page.content, 'html.parser')
     for item in soup.find_all("a", class_="resource-url-analytics"):
         url = item.get('href')
@@ -29,5 +30,12 @@ def main(URL):
             name = url.rsplit("/", 1)[-1]
             with open(name, 'wb') as f:
                 f.write(csv_data.content)
-        sleep(randint(10,30))
+        sleep(randint(10, 30))
 
+
+if __name__ == "__main__":
+    URL = "https://open.africa/dataset/2019-kenya-population-and-housing-census"
+
+    # download the population csv files
+    main(URL)
+    print('all population data files downloaded')
